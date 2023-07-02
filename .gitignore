@@ -2,5 +2,6 @@
 Phishing.csv
 new_phishing.csv
 phishing_dataset.csv
-/utils
 exp.ipynb
+experiment.ipynb
+model_small.pkl
