@@ -1,7 +1,6 @@
 /env
-chat.py
-exp.ipynb
-new_phishing.csv
 Phishing.csv
+new_phishing.csv
 phishing_dataset.csv
-utils
+/utils
+exp.ipynb
