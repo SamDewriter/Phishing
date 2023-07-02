@@ -9,7 +9,7 @@ from urllib.parse import urlparse, parse_qs
 
 # Load the model
 config = toml.load('config.toml')
-pickle_path = config['file_path']
+pickle_path = config["file_path"]
 with open(pickle_path, 'rb') as f:
     model = pickle.load(f)
 
