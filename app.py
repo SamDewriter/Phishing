@@ -3,11 +3,15 @@ import pandas as pd
 import pickle
 import validators
 import copy
+import toml
 from urllib.parse import urlparse, parse_qs
 
 
 # Load the model
-model = pickle.load(open('model_small.pkl', 'rb'))
+config = toml.load('config.toml')
+pickle_path = config['file_path']
+with open(pickle_path, 'rb') as f:
+    model = pickle.load(f)
 
 def extract_features(url):
     parsed_url = urlparse(url)
