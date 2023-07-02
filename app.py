@@ -4,26 +4,19 @@ import pickle
 import validators
 import copy
 import toml
+import base64
 from urllib.parse import urlparse, parse_qs
+from utils.extractor import FeaturesExtractor
 
 
 # Load the model
 config = toml.load('config.toml')
+# Columns to be used for training
+columns = config["training"]["columns"]
+
 pickle_path = config["pickle"]["file_path"]
 with open(pickle_path, 'rb') as f:
     model = pickle.load(f)
-
-def extract_features(url):
-    parsed_url = urlparse(url)
-
-    # Extract query params
-    query_length = len(parse_qs(parsed_url.query))
-
-    # Extract domain
-    domain_tokens = parsed_url.netloc.split(".")
-    domain_token_count = len(domain_tokens)
-
-    return [query_length, domain_token_count]
 
 def is_single_column(file_path):
     try:
@@ -44,28 +37,29 @@ def is_valid_url(url):
         return False
 
 def train_single(url):
-    features = extract_features(url)
-    df = pd.DataFrame([features], columns=['Querylength', 'domain_token_count'])
+    features = FeaturesExtractor(url).all_features()
+
+    df = pd.DataFrame([features], columns=columns)
 
     pred = model.predict(df)
-    return pred
 
+    return pred
 
 def train_multiple(df: pd.DataFrame):
 
-    input_df = df.copy()
+    pred_df = df.copy()
     features = []
     for url in df["URLs"]:
-        feature_extracted = extract_features(url)
+        feature_extracted = FeaturesExtractor(url).all_features()
         features.append(feature_extracted)
 
-    new_df = pd.DataFrame(features, columns=["Querylength", "domain_token_count"])
+    new_df = pd.DataFrame(features, columns=columns)
 
     pred = model.predict(new_df)
 
-    input_df["Prediction"] = pred
+    pred_df["Prediction"] = pred
 
-    return input_df
+    return pred_df
     
 def main():
     st.title('Smart Phishing Detection System')
@@ -117,7 +111,25 @@ def main():
                 # Load the predictions
                 st.write('---')
                 st.write('Multiple Prediction Results')
-                st.write(load_df)
+                st.dataframe(load_df)
+
+                st.write('---')
+                # Do basic analysis on the predictions
+                st.subheader('Basic Analysis on the Prediction Results')
+                st.write('Total number of URLs:', load_df.shape[0])
+                st.write('Total number of Legitimate URLs:', load_df["Prediction"].value_counts()[0])
+                st.write('Total number of Phishing URLs:', load_df["Prediction"].value_counts()[1])
+
+
+                # Download the predictions
+                st.write('---')
+                st.write('Download the prediction results here:')
+                csv = load_df.to_csv(index=False)
+                b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+                href = f'<a href="data:file/csv;base64,{b64}" download="prediction.csv">Download CSV File</a>'
+                st.markdown(href, unsafe_allow_html=True)
+                # st.write(load_df.to_csv(index=False), encoding='utf-8', header=True)
+
 
             else:
                 # if is_single_column(uploaded_file) is False:
