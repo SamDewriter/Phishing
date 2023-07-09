@@ -64,10 +64,15 @@ class FeaturesExtractor:
         """Extract number-related features."""
         number_features = {}
 
-        # Calculate NumberRate_Domain
-        domain_chars = sum(1 for char in self.domain if char.isalnum())
-        number_rate_domain = domain_chars / len(self.domain)
-        number_features['NumberRate_Domain'] = number_rate_domain
+        try:
+            # Calculate NumberRate_Domain
+            domain_chars = sum(1 for char in self.domain if char.isalnum())
+
+            number_rate_domain = domain_chars / len(self.domain)
+            number_features['NumberRate_Domain'] = number_rate_domain
+
+        except ZeroDivisionError:
+            number_features['NumberRate_Domain'] = 0
 
         return number_features
 
