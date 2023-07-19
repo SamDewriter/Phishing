@@ -5,3 +5,7 @@ phishing_dataset.csv
 exp.ipynb
 experiment.ipynb
 model_small.pkl
+phishing_site_urls.csv
+sampled_urls.csv
+
+.space

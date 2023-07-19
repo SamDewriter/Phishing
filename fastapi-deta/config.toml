@@ -1,0 +1,9 @@
+[pickle]
+file_path = "model.pkl"
+
+[training]
+columns = ['domain_token_count', 'avgpathtokenlen', 'urlLen', 'domainlength',
+       'ArgUrlRatio', 'NumberofDotsinURL', 'URL_DigitCount',
+       'Filename_LetterCount', 'LongestPathTokenLength',
+       'Path_LongestWordLength', 'spcharUrl', 'NumberRate_Domain',
+       'Entropy_Domain']
