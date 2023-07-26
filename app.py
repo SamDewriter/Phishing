@@ -32,13 +32,13 @@ def is_single_column(file_path):
     # except pd.errors.EmptyDataError:
     #     return False
 
-def is_valid_url(url): # pylint: disable=R1710
-    """Check if the URL is valid."""
-    try:
-        if validators.url(url):
-            return True
-    except validators.ValidationFailure:
-        return False
+# def is_valid_url(url): # pylint: disable=R1710
+#     """Check if the URL is valid."""
+#     try:
+#         if validators.url(url):
+#             return True
+#     except validators.ValidationFailure:
+#         return False
 
 def predict_single_url(url):
     """
@@ -98,21 +98,20 @@ def main():
 
     if button:
         if url:
-            if is_valid_url(url):
-                st.write('---')
-                st.write('The URL you entered is:')
-                st.write(url)
+            st.write('---')
+            st.write('The URL you entered is:')
+            st.write(url)
 
-                prediction = predict_single_url(url)
+            prediction = predict_single_url(url)
 
-                if prediction[0] == 0:
-                    st.write('This is a legitimate URL.')
-                else:
-                    st.write('This is a phishing URL.')
-            else:
-                st.sidebar.error("""
-                    Error: The URL you entered is not valid.
-                    Please enter a valid URL.""")
+            if prediction[0] == 0:
+                st.write('This is a legitimate URL.')
+            elif prediction[0] == 1:
+                st.write('This is a phishing URL.')
+        else:
+            st.sidebar.error("""
+                Error: The URL you entered is not valid.
+                Please enter a valid URL.""")
 
     else:
         if uploaded_file is not None:
