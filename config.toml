@@ -1,5 +1,5 @@
 [pickle]
-file_path = "model.pkl"
+file_path = "dt_model.pkl"
 
 [training]
 columns = ['domain_token_count', 'avgpathtokenlen', 'urlLen', 'domainlength',
