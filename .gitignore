@@ -7,5 +7,14 @@ experiment.ipynb
 model_small.pkl
 phishing_site_urls.csv
 sampled_urls.csv
-
+extracted.ipynb
+extracted.csv
+Phishing_BestFirst.csv
+dt_model_new.pkl
+expp.ipynb
+phishing_extracted.csv
+rf_model.pkl
+new_data.csv
+new.ipynb
+model_new.pkl
 .space
