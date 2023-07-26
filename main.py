@@ -1,29 +1,17 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
-# Import utils from the root folder
-# import sys
-# import os
-# from deta import Deta
-# sys.path.append("../utils")
 from utils.extractor import FeaturesExtractor
 import toml
 import joblib
 import uvicorn
 
-# Load scikit-learn from Deta Drive
-# deta = Deta(project_key="a0bNXd677pSL_msuF5hkq9FgXCZx8BV9QKEQaR2QhzSDT")
-# db = deta.Base("my_db")
-# db.get("scikit-learn")
-# sys.path.append("my_db/scikit-learn")
-
-# os.system("tar -xvf my_db/scikit-learn/scikit-learn.tar.gz")
 
 # Load the model
 config = toml.load('config.toml')
 # Columns to be used for training
 columns = config["training"]["columns"]
-model = joblib.load('model.pkl')
+model = joblib.load('dt_model.pkl')
 
 
 class URLInput(BaseModel):
@@ -47,7 +35,7 @@ async def predict(input: URLInput):
 
     if pred == 1:
         return {"prediction": "Phishing URL"}
-    else:
+    elif pred == 0:
         return {"prediction": "Legitimate URL"}
     
 
