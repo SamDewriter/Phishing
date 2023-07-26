@@ -1,20 +1,18 @@
-matplotlib==3.7.1
-mlxtend==0.22.0
-numpy==1.24.3
-pandas==2.0.2
-requests==2.31.0
-scikit-learn==1.2.2
-scipy==1.10.1
-streamlit==1.23.1
-tabulate==0.9.0
-toml==0.10.2
-urllib3==2.0.3
-validators==0.20.0
-fastapi
-uvicorn[standard]
-toml
-pydantic
-pandas
-joblib
-deta
-scikit-learn
+matplotlib==3.7.1 # For plotting graphs and charts
+mlxtend==0.22.0 # For 
+numpy==1.24.3 # For crunching numbers and data
+pandas==2.0.2 # For data manipulation and analysis
+requests==2.31.0 # For making HTTP requests
+scikit-learn==1.2.2 # For machine learning
+scipy==1.10. # For scientific computing
+streamlit==1.23.1 # For building web apps for machine learning and data science
+tabulate==0.9.0 # For printing dataframes in a nice format
+toml==0.10.2 # For parsing configuration files
+urllib3==2.0.3 # For making HTTP requests
+validators==0.20.0 # For validating data
+fastapi # For building APIs
+uvicorn[standard] # For running the API server
+pydantic # For data validation
+joblib # For saving and loading models
+deta # For deploying models
+
